@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerceapi.config.JwtProvider;
 import com.ecommerceapi.exception.UserException;
+import com.ecommerceapi.model.Cart;
 import com.ecommerceapi.model.User;
 import com.ecommerceapi.repository.UserRepository;
 import com.ecommerceapi.request.LoginRequest;
 import com.ecommerceapi.response.AuthResponse;
+import com.ecommerceapi.service.CartService;
 import com.ecommerceapi.service.CustomUserDetailServiceImpl;
 
 @RestController
@@ -35,7 +37,10 @@ public class AuthController {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private CustomUserDetailServiceImpl service;
+	@Autowired
+	private CartService cartService;
 		
+	// user can signup by providing , email, firstname, lastname, password 
 	@PostMapping(value = "/signup" , produces = "application/json")
 	public ResponseEntity<AuthResponse>createUserHandler(@RequestBody User user)throws Exception{
 		String email = user.getEmail();
@@ -55,7 +60,8 @@ public class AuthController {
 		newUser.setEmail(email);
 		newUser.setPassword(passwordEncoder.encode(password));
 		
-		User savedUser = repo.save(newUser); 
+		User savedUser = repo.save(newUser);
+		Cart cart = cartService.createCart(savedUser); 
 		
 		Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail() , savedUser.getPassword());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -67,6 +73,8 @@ public class AuthController {
 		
 		return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
 	}
+	
+	//user can signin , by providing email and password
 	@PostMapping("/signin")
 	public ResponseEntity<AuthResponse>loginUserHandler(@RequestBody LoginRequest loginRequest){
 		String userName = loginRequest.getEmail();
@@ -84,6 +92,7 @@ public class AuthController {
 		return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
 	}
 	
+	//method to authenticate user
 	public Authentication authenticate(String userName , String password) {
 		UserDetails userDetail = service.loadUserByUsername(userName);
 		if(userDetail == null) {

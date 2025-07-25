@@ -19,6 +19,7 @@ public class UserController {
   @Autowired
   private UserService userService;
   
+  //we can get the users detail , when they login
   @GetMapping("/profile")
   public ResponseEntity<User> getUserProfileHandler(@RequestHeader("Authorization" )String jwt)throws UserException{
     User user = userService.findUserProfileByJwt(jwt);

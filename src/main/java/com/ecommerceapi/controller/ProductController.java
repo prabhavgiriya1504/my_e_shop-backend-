@@ -24,6 +24,7 @@ public class ProductController {
 	@Autowired
 	private ProductService prodService;
 	
+	//user can sort the products based on their choices , color , price , size , discount
 	@GetMapping("/products")
 	public ResponseEntity<Page<Product>> findProductByCategoryHandler(
 	        @RequestParam(required = false) String category,
@@ -40,7 +41,7 @@ public class ProductController {
 	    return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
 	}
 
-	
+	//admin can view product by its id
 	@GetMapping("/products/id/{productId}")
 	public ResponseEntity<Product> findProductByIdHandler(
 	        @PathVariable Long productId) throws ProductException {

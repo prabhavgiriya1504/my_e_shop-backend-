@@ -1,7 +1,8 @@
+
+
 package com.ecommerceapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,10 +10,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import lombok.Getter; // Add specific Lombok annotations
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor; // Optional: if you need a constructor with all fields
+import lombok.ToString; // Explicitly import ToString
+import lombok.EqualsAndHashCode; // Explicitly import EqualsAndHashCode
 
-@Data
+import java.util.Objects; // Import for Objects.equals and Objects.hash
+
 @Entity
+@Getter // Generates getters for all fields
+@Setter // Generates setters for all fields
+@NoArgsConstructor // Generates the no-argument constructor
+// @Data // REMOVED: Replaced by @Getter, @Setter, @ToString, @EqualsAndHashCode
+@ToString(exclude = "user") // Exclude 'user' from toString() to prevent StackOverflowError
+@EqualsAndHashCode(of = "id") // Ensures equals/hashCode only use the primary key (id)
 public class Address {
 
 	@Id
@@ -39,14 +52,13 @@ public class Address {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonIgnore
-	private User user;
-	
+	@JsonIgnore // Good for JSON serialization to prevent infinite recursion in JSON
+	private User user; // This is the field causing the toString() recursion
 	
 	private String mobile;
 	
-	public Address() {
-		//non-parametrized constructor
-	}
-	
+	// You can remove this explicit constructor if @NoArgsConstructor is used
+	// public Address() {
+	// 	//non-parametrized constructor
+	// }
 }

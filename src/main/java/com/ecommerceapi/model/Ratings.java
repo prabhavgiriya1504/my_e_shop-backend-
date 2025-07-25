@@ -23,6 +23,7 @@ public class Ratings {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id" , nullable = false)
+	@JsonIgnore
 	public User user;
 	
 	@JsonIgnore

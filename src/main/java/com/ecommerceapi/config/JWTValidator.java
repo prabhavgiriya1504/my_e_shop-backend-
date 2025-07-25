@@ -44,7 +44,7 @@ public class JWTValidator extends OncePerRequestFilter{
 				
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}catch(Exception exc) {
-				throw new BadCredentialsException("invalid token prabhav... from jwt validator");
+				throw new BadCredentialsException("invalid token ||||||prabhav||||... from jwt validator");
 			}
 		}
 		filterChain.doFilter(request , response);

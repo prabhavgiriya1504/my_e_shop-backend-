@@ -25,13 +25,16 @@ public class AdminOrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
 
+	//admin to get orders 
 	@GetMapping("/")
 	public ResponseEntity<List<Order>> getAllOrdersHandler(){
 	    List<Order> orders=orderService.getAllOrders();
 	    return new ResponseEntity<List<Order>>(orders,HttpStatus.ACCEPTED);
 	}
 
+	//admin will get confirmedorders
 	@PutMapping("/{orderId}/confirmed")
 	public ResponseEntity<Order> ConfirmedOrderHandler(@PathVariable Long orderId,
 	    @RequestHeader("Authorization") String jwt) throws OrderException {
@@ -40,6 +43,7 @@ public class AdminOrderController {
 	    return new ResponseEntity<>(order , HttpStatus.OK);
 	}
 
+	//admin will get the shipped orders
 	@PutMapping("/{orderId}/ship")
 	public ResponseEntity<Order>shippedOrderHandler(@PathVariable Long orderId ,@RequestHeader("Authorization")String jwt)throws OrderException{
 		Order order = orderService.shippedOrder(orderId);
@@ -52,12 +56,16 @@ public class AdminOrderController {
 		
 		return new ResponseEntity<>(order , HttpStatus.OK);
 	}
+	
+	//admin will get the cancel orders
 	@PutMapping("/{orderId}/cancel")
 	public ResponseEntity<Order>cancelOrderHandler(@PathVariable Long orderId ,@RequestHeader("Authorization")String jwt)throws OrderException{
 		Order order = orderService.cancledOrder(orderId);
 		
 		return new ResponseEntity<>(order , HttpStatus.OK);
 	}
+	
+	//admin can see deleted orders
 	@DeleteMapping("/{orderId}/delete")
 	public ResponseEntity<ApiResponse>deleteOrderHandler(@PathVariable Long orderId ,@RequestHeader("Authorization")String jwt)throws OrderException{
 		 orderService.deleteOrder(orderId);

@@ -29,6 +29,7 @@ public class CartController {
     @Autowired
     private UserService userService;
 
+    //user can get his cart, if he is currently logged in
     @GetMapping("/")
     public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization") String jwt) throws UserException {
         User user = userService.findUserProfileByJwt(jwt);
@@ -37,6 +38,7 @@ public class CartController {
         return new ResponseEntity<Cart>(cart,HttpStatus.OK);
     }
     
+    //user can add items to cart
     @PutMapping("/add")
     public ResponseEntity<ApiResponse> addItemToCart(@RequestBody AddItemRequest req,
           @RequestHeader("Authorization") String jwt) throws UserException, ProductException {

@@ -31,6 +31,7 @@ public class OrderController {
 	@Autowired
 	private UserService userService;
 
+	// user can create orders by reviewing the items in the cart, providing delivery address, and making payment 
 	@PostMapping("/")
 	public ResponseEntity<Order> createOrder(@RequestBody Address shippingAddress,
 	        @RequestHeader("Authorization") String jwt) throws UserException {
@@ -44,6 +45,7 @@ public class OrderController {
 	    return new ResponseEntity<Order>(order, HttpStatus.CREATED);
 	}
 	
+	//user can see their order history
 	@GetMapping("/user")
 	public ResponseEntity<List<Order>> usersOrderHistory(
 	    @RequestHeader("Authorization") String jwt) throws UserException{
@@ -55,6 +57,7 @@ public class OrderController {
 	    return new ResponseEntity<>(orders, HttpStatus.CREATED);
 	}
 	
+	//admin can find the order by their order id
 	@GetMapping("/{id}")
 	public ResponseEntity<Order> findOrderById(
 	    @PathVariable("id") Long orderId,

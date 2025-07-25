@@ -27,7 +27,8 @@ public class AdminProductController {
 	@Autowired
 	private ProductService prodService;
 	
-	@PostMapping("/")
+	//admin can create product , by providing data
+ 	@PostMapping("/")
 	public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequest req){
 
 	    Product product = prodService.createProduct(req);
@@ -35,6 +36,7 @@ public class AdminProductController {
 
 	}
 
+ 	//admin can delete product from database
 	@DeleteMapping("/{productId}/delete")
 	public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId) throws ProductException{
 
@@ -46,6 +48,7 @@ public class AdminProductController {
 	    return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
+	//admin can see all products
 	@GetMapping("/all")
 	public ResponseEntity<List<Product>> findAllProduct(){
 
@@ -54,6 +57,7 @@ public class AdminProductController {
 	    return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 	
+	//admin can update the products
 	@PutMapping("/{productId}/update")
 	public ResponseEntity<Product> updateProduct(@RequestBody Product req, @PathVariable Long productId)
 	throws ProductException{
@@ -62,7 +66,7 @@ public class AdminProductController {
 	    return new ResponseEntity<Product>(product, HttpStatus.CREATED);
 	}
 	
-	
+	//admin can create multiple products in one call , by providing the data in the form of an array
 	@PostMapping("/creates")
 	public ResponseEntity<ApiResponse> createMultipleProduct(@RequestBody CreateProductRequest[] req){
 

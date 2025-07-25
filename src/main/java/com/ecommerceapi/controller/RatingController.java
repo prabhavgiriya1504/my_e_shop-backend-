@@ -33,6 +33,7 @@ public class RatingController {
 	@Autowired
 	private RatingService ratingService;
 	
+	// user can create ratings , by providing the details
 	@PostMapping("/create")
 	public ResponseEntity<Ratings> 	createRating(@RequestBody RatingRequest req, @RequestHeader("Authorization") String jwt) throws UserException, ProductException{
 	User user = userService.findUserProfileByJwt(jwt);
@@ -41,6 +42,7 @@ public class RatingController {
 	}
 	
 
+	//admin can show the products overall rating to user
 	@GetMapping("/product/{productid}")
 	public ResponseEntity<List<Ratings>> getProductsRating(@PathVariable Long productid, @RequestHeader("Authorization") String jwt) throws UserException, ProductException{
 	

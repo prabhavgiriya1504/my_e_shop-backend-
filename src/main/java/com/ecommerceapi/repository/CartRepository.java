@@ -11,6 +11,6 @@ import com.ecommerceapi.model.Cart;
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
 	@Query("SELECT c FROM Cart c WHERE c.user.id=:userId")
-	public Cart findByUserId(@Param("useId")Long userId);
+	public Cart findByUserId(@Param("userId")Long userId);
 
 }

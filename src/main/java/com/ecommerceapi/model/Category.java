@@ -1,5 +1,7 @@
 package com.ecommerceapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class Category {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent_category_id")
+	@JsonIgnore
 	private Category parentCategory;
 	
 	private int level;

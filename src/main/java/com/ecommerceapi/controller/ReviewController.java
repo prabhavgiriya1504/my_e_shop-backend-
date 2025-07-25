@@ -32,6 +32,7 @@ public class ReviewController {
 	@Autowired
 	private UserService userService;
 	
+	//users can provide review , by providing the details
 	@PostMapping("/create")
 	public ResponseEntity<Review> createReviewReview(@RequestBody ReviewRequest req, @RequestHeader("Authorization") String jwt) throws UserException, ProductException{
 		User user = userService.findUserProfileByJwt(jwt);
@@ -41,6 +42,7 @@ public class ReviewController {
 	}
 	
 
+	//we can show the product's all reviews to user in product_detail page
 	@GetMapping("/product/{productId}")
 	public ResponseEntity<List<Review>> getProductsReview(@PathVariable Long productid) throws UserException, ProductException{
 	  List<Review>reviews = reviewService.getAllReview(productid);

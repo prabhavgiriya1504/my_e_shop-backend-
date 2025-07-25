@@ -28,6 +28,7 @@ public class CartItemController {
     @Autowired
     private CartItemService cartItemService;
 
+    //user can remove cartitems
     @DeleteMapping("/{cartItemId}")
     public ResponseEntity<ApiResponse> deleteCartItem(
             @PathVariable Long cartItemId,
@@ -43,6 +44,7 @@ public class CartItemController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    // user can update cartitems, by incresing/decreasing the number of items
     @PutMapping("/{cartItemId}")
     public ResponseEntity<CartItems> updateCartItem(
             @RequestBody CartItems cartItem,
