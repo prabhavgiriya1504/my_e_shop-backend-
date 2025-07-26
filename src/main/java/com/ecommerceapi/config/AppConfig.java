@@ -41,7 +41,7 @@ public class AppConfig {
 				
 				cfg.setAllowedOrigins(Arrays.asList(
 						"http://localhost:3000",
-						"myeshop-backend.railway.internal"
+						"https://my-e-shop-five.vercel.app/"
 						));
 				cfg.setAllowedMethods(Collections.singletonList("*"));
 				cfg.setAllowCredentials(true);
